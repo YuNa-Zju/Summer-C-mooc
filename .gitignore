@@ -1,2 +1,4 @@
 .envrc
 .direnv/
+temp
+temp.cpp
