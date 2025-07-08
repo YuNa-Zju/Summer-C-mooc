@@ -1,41 +1,50 @@
 #include <bits/stdc++.h>
+
+#include <iostream>
 using namespace std;
-const int MAXN = 100005;
-int nums[MAXN];
-int dq_arr[MAXN];
-int head = 0;
-int tail = 0;
+int q[100001], head = 0, tail = 0;
+int num[100001];
+void append(int a)
+{
+    while (head != tail)
+    {
+        if (q[tail - 1] < a) tail--;
+        if (q[tail - 1] >= a)
+        {
+            q[tail++] = a;
+            return;
+        }
+    }
+    if (head == tail)
+    {
+        q[tail++] = a;
+        return;
+    }
+}
 int main()
 {
     int n, k;
     cin >> n >> k;
-
-    for (int i = 0; i < n; ++i)
+    for (int i = 1; i <= n; i++)
     {
-        cin >> nums[i];
+        cin >> num[i];
     }
-    for (int i = 0; i < k; ++i)
+    for (int i = 1; i <= k; i++)
     {
-        while (head != tail && nums[i] >= nums[dq_arr[tail - 1]])
-        {
-            tail--;
-        }
-        dq_arr[tail++] = i;
+        append(num[i]);
     }
-    for (int i = k; i < n; ++i)
+    cout << q[head];
+    for (int i = k + 1; i <= n; i++)
     {
-        printf("%d ", nums[dq_arr[head]]);
-        while (head != tail && dq_arr[head] <= i - k)
-        {
-            head++;
-        }
-
-        while (head != tail && nums[i] >= nums[dq_arr[tail - 1]])
-        {
-            tail--;
-        }
-        dq_arr[tail++] = i;
+        if (q[head] == num[i - k]) head++;
+        append(num[i]);
+        cout << " " << q[head];
+        // cout << "q: ";
+        // for (int j = head; j < tail; j++)
+        // {
+        //     cout << q[j] << " ";
+        // }
+        // cout << endl;
     }
-    printf("%d\n", nums[dq_arr[head]]);
     return 0;
 }
