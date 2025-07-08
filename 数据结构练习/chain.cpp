@@ -46,6 +46,22 @@ class Chain
         return this;
     }
 
+    int search(int target)
+    {
+        Chain* current = this;
+        int index = 1;
+        while (current != nullptr)
+        {
+            if (current->val == target)
+            {
+                return index;
+            }
+            current = current->next;
+            index++;
+        }
+        return -1;
+    }
+
    private:
     int val;
     Chain* next;
@@ -65,6 +81,8 @@ int main()
         next = next->set_next(new Chain(num));
     }
     head->print();
+    cin >> num;
+    cout << head->search(num);
     delete head;
     return 0;
 }
